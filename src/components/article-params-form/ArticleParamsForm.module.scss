@@ -1,6 +1,8 @@
 .container {
 	position: fixed;
+	top: 0;
 	left: 0;
+	z-index: 20;
 	width: 616px;
 	height: 100%;
 	overflow: scroll;
@@ -18,15 +20,55 @@
 	flex-direction: column;
 	box-sizing: border-box;
 	width: 616px;
-	height: auto;
 	min-height: 100%;
 	padding: 50px 31px;
 	background-color: #ffffff;
 	border-right: 1px solid #000000;
 }
 
-.bottomContainer {
+.header {
+	padding: 32px 31px 0;
+	background-color: #ffffff;
+}
+
+/* блоки формы: шрифт, размер, цвет шрифта, цвет фона, ширина */
+
+.field {
+	margin-top: 50px;
+}
+
+/* первый блок "Шрифт" — без доп. отступа сверху */
+
+.field:first-of-type {
+	margin-top: 0;
+}
+
+/* разделитель перед "Цвет фона" */
+
+.separatorWrapper {
+	margin-top: 50px;
+	margin-bottom: 0;
+}
+
+/* блок "Цвет фона" */
+
+.fieldColorBackground {
+	margin-top: 50px;
+}
+
+/* блок с кнопками внизу формы */
+
+.buttons {
 	display: flex;
 	justify-content: space-between;
 	margin-top: auto;
+}
+
+/* стрелка слева сверху, всегда на месте */
+
+.arrowButtonWrapper {
+	position: fixed;
+	top: 32px;
+	left: 32px;
+	z-index: 30;
 }
