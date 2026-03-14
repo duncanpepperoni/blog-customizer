@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import clsx from 'clsx';
+
 import { OptionType } from 'src/constants/articleProps';
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
@@ -5,6 +8,7 @@ import { RadioGroup } from 'src/ui/radio-group';
 import { Select } from 'src/ui/select';
 import { Separator } from 'src/ui/separator';
 import { Text } from 'src/ui/text';
+import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 
 import styles from './ArticleParamsForm.module.scss';
 
@@ -43,7 +47,19 @@ export const ArticleParamsForm = ({
 	onApply,
 	onReset,
 	onToggle,
+	onClose,
 }: ArticleParamsFormProps) => {
+	const asideRef = useRef<HTMLDivElement | null>(null);
+
+	useOutsideClickClose({
+		isOpen,
+		rootRef: asideRef,
+		onClose,
+		onChange: () => {
+			// хук вызовется при клике вне, реальное закрытие делает onClose
+		},
+	});
+
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault();
 		onApply();
@@ -56,9 +72,10 @@ export const ArticleParamsForm = ({
 			</div>
 
 			<aside
-				className={`${styles.container} ${
-					isOpen ? styles.container_open : ''
-				}`}>
+				ref={asideRef}
+				className={clsx(styles.container, {
+					[styles.container_open]: isOpen,
+				})}>
 				<div className={styles.header}>
 					<Text as='h2' size={25} weight={800} uppercase dynamicLite>
 						Задайте параметры
